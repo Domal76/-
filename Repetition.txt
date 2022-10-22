@@ -1,0 +1,40 @@
+package SberRepetition;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
+
+public class Repetition {
+    String filePath = "C:\\Users\\User\\Sber\\Directory\\city_ru.CSV";
+    ArrayList<CityRepetition> cities = new ArrayList<>();
+    String[][] array = new String[2000][6];
+    Map<Object, Integer> counter;
+
+    public void excelCreate() {
+        Scanner scanner;
+
+        try {
+            scanner = new Scanner(new File(filePath));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        int i = 0;
+        while (scanner.hasNext()) {
+            String str = scanner.nextLine();
+            array[i] = str.split(";");
+
+            CityRepetition city = new CityRepetition(array[i][0], array[i][1], array[i][2], array[i][3],
+                    array[i][4]);
+            cities.add(city);
+            i++;
+        }
+        scanner.close();
+        counter = new HashMap<>();
+        for (int j = 0; j < cities.size(); j++) {
+            String str = cities.get(j).getDistrict();
+            counter.compute(str, (String, integer) -> integer == null ? 1 : integer + 1);
+        }
+        for (Map.Entry<Object, Integer> entry : counter.entrySet())
+            System.out.println(entry.getKey() + " " + entry.getValue());
+    }
+}

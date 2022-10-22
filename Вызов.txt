@@ -1,0 +1,9 @@
+package SberRepetition;
+
+public class CallRepetition {
+    public static void main(String[] args) {
+            Repetition repetition = new Repetition();
+            repetition.excelCreate();
+
+    }
+}
